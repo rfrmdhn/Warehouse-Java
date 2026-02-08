@@ -82,3 +82,14 @@ The API will start at `http://localhost:8080`.
 -   `src/main/java`: Source code
 -   `src/main/resources`: Configuration (`application.properties`)
 -   `full_setup.sql`: Database initialization script
+
+## Design Decisions
+1.  **3-Layer Architecture**: Separated concerns into Controller (API), Service (Business Logic), and Repository (Data Access) for maintainability and testability.
+2.  **DTO Pattern**: Introduced Data Transfer Objects (`ItemRequest`, `ItemResponse`, etc.) to decouple the external API contract from the internal Database Entities. This allows the internal schema to evolve without breaking the API.
+3.  **Atomic Concurrency Control**: Implemented `sellItem` using a custom atomic SQL update (`UPDATE ... SET stock = stock - ? WHERE ...`) to strictly prevent race conditions and overselling in high-concurrency scenarios.
+4.  **Global Exception Handling**: Centralized error handling using `@ControllerAdvice` to provide consistent, meaningful JSON error responses (e.g., 404 Not Found, 400 Bad Request) across the application.
+
+## Assumptions
+-   **Currency**: All prices are treated as a single uniform currency. No multi-currency support is implemented.
+-   **Authentication**: As per the requirements for a "simple" system, no authentication/authorization layer was added to keep the focus on core inventory logic.
+-   **Stock Logic**: Stock can only be depleted by "orders". Restocking is done via the update endpoint.
