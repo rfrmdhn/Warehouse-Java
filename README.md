@@ -1,5 +1,7 @@
 # Warehouse Management System
 
+> **Disclaimer:** This repository contains the technical test submission by **Rafi Ramadhan Athallah** for the **Fullstack Developer** position at **Great Eastern Life Insurance**. All code and documentation within this repository have been created specifically for this assessment.
+
 A simple RESTful API for a shop warehouse management system built with Spring Boot and MySQL.
 
 ## Requirements
